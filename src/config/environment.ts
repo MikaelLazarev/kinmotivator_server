@@ -23,7 +23,10 @@ export const config: ConfigParams = {
 	CHANNEL_SALT: process.env.CHANNEL_SALT || 'bootstrap',
 	CHANNEL_STARTING_BALANCE: parseInt(process.env.CHANNEL_STARTING_BALANCE? process.env.CHANNEL_STARTING_BALANCE : '1'),
 	PORT: parseInt(process.env.PORT ? process.env.PORT : '3000'),
-	CONSOLE_LOGGER: process.env.CONSOLE_LEVEL || 'SILLY'
+	CONSOLE_LOGGER: process.env.CONSOLE_LEVEL || 'SILLY',
+	DB: process.env.DB_PATH || 'mongodb+srv://root:wrikeTest2019@cluster0-j70uo.mongodb.net/dev_motivator?retryWrites=true&w=majority',
+	TOKEN_LIFE: 900,
+	REFRESH_TOKEN_LIFE: 86400,
 };
 
 export interface ConfigParams {
@@ -38,4 +41,7 @@ export interface ConfigParams {
 	// Changing the port requires to modify the docker-compose.yml as well.
 	PORT: number;
 	CONSOLE_LOGGER: string;
+	DB: string;
+	TOKEN_LIFE: number,
+	REFRESH_TOKEN_LIFE: number,
 }
