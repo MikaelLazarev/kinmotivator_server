@@ -8,42 +8,43 @@ export class AuthController {
   }
 
   login() {
-    return (req: any, res: any) => {
+    return async (req: any, res: any) => {
       const username = req.body.username;
       const password = req.body.password;
-      console.log(username, password)
-      this.service
-        .login(username, password)
-        .then(result => res.status(200).json(result))
-        .catch(err => {
-          console.log(err);
-          res.status(403).json({ error: err.toString() });
-        });
+      try {
+        const tokenPair = await this.service.login(username, password);
+        res.status(200).json(tokenPair);
+      } catch (err) {
+        console.log(err);
+        res.status(403).json({ error: err.toString() });
+      }
     };
   }
 
   signup() {
-    return (req: any, res: any) => {
+    return async (req: any, res: any) => {
       const username = req.body.username;
       const password = req.body.password;
-      this.service.signup(username, password)
-        .then(result => res.status(201).json(result))
-        .catch(err => {
-          console.log(err);
-          res.status(403).json({ error: err.toString() });
-        });
+      try {
+        const tokenPair = await this.service.signup(username, password);
+        res.status(201).json(tokenPair);
+      } catch (err) {
+        console.log(err);
+        res.status(400).json({ error: err.toString() });
+      }
     };
   }
 
   refresh() {
-    return (req: any, res: any) => {
+    return async (req: any, res: any) => {
       const token = req.body.token;
-      this.service.refreshToken(token)
-        .then(result => res.status(201).json(result))
-        .catch(err => {
-          console.log(err);
-          res.status(403).json({ error: err.toString() });
-        });
+      try {
+        const tokenPair = await this.service.refreshToken(token);
+        res.status(201).json(tokenPair);
+      } catch (err) {
+        console.log(err);
+        res.status(400).json({ error: err.toString() });
+      }
     };
   }
 }

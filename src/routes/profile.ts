@@ -1,16 +1,16 @@
 import * as core from "express-serve-static-core";
-import {CommunityController} from "../controllers/communities";
+import {ProfileController} from "../controllers/profile";
 import {GlobalServices} from "../services/services";
+import * as express from 'express';
 
-const express = require('express');
 
-export function userRouter(globalServices : GlobalServices): Promise<core.Router> {
+export function profileRouter(globalServices : GlobalServices): express.Router {
 
 	const router = express.Router();
-	const communityController = new CommunityController(globalServices.communityService)
+	const profileController = new ProfileController(globalServices.authService)
 	router
-		.get('/', communityController.list())
-		.get('/:id', communityController.retrieve())
-		.post('/', communityController.create())
+		.get('/', profileController.getProfile())
+		.post('/', profileController.updateProfile())
+
 	return router;
 }

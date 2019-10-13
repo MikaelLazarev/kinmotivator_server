@@ -30,20 +30,45 @@ export class CommunityController {
     }
 
     retrieve()  {
-        return (req: any, res: any) => {
+        return async (req: any, res: any) => {
+            const userId = req.userID
             const id = req.params.id || "0";
-            this.service.retrieve(id)
-                .then(result => res.json(result))
-                .catch(() => res.status(400).send())
+            try {
+                const result = await this.service.retrieve(id, userId)
+                res.json(result)
+            } catch (e) {
+                res.status(400).json({error : e.toString()})
+            }
+
         }
     }
 
     join()  {
         return (req: any, res: any) => {
-            console.log("KKK", this.service)
-            const id = "444"
-            const userId = "444"
-            return res.json(this.service.join(id, userId))
+
+            const id = req.params.id
+            const userId = req.userID
+
+            if ((!id) || (!userId)) {
+                return res.status(400).json({error : "Wrong request"})
+            }
+            this.service.join(id, userId)
+              .then(result => res.json(result))
+              .catch(() => res.status(400).send())
+        }
+    }
+
+    leave()  {
+        return (req: any, res: any) => {
+            const id = req.params.id
+            const userId = req.userID
+
+            if ((!id) || (!userId)) {
+                return res.status(400).json({error : "Wrong request"})
+            }
+            this.service.leave(id, userId)
+              .then(result => res.json(result))
+              .catch(() => res.status(400).send())
         }
     }
 

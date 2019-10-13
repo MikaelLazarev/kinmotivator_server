@@ -3,6 +3,7 @@ import { GlobalServices } from '../services/services';
 import { communitiesRouter } from './communities';
 import { authRouter } from './auth';
 import { feedRouter } from './feed';
+import { profileRouter } from './profile';
 import * as express from 'express';
 import { authRequired } from '../middlewares/auth';
 
@@ -14,6 +15,8 @@ export function apiRouter(): express.Router {
     .use('/auth', authRouter(globalServices))
     .use('/communities', authRequired, communitiesRouter(globalServices))
     .use('/feed', authRequired, feedRouter(globalServices))
+    .use('/profile', authRequired, profileRouter(globalServices))
+
 
   return router;
 }

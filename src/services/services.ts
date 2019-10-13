@@ -2,7 +2,7 @@ import { CommunityService } from './communities';
 import { ICommunityService } from '../core/communities';
 import { GlobalStore } from '../store/store';
 import { IAuthService } from '../core/user';
-import { AuthService } from './auth';
+import { AuthService } from './user';
 import { IFeedService } from '../core/feed';
 import { FeedService } from './feed';
 

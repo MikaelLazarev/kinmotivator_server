@@ -1,10 +1,10 @@
-import { IAuthService, IUser, IUserRepository } from '../core/user';
+import { IAuthService, IProfile, IUser, IUserRepository } from '../core/user';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { ITokenPair } from '../core/user';
 import { config } from '../config/environment';
 
-interface decodedToken {
+export interface decodedToken {
   id: string;
   exp: number;
 }
@@ -17,8 +17,10 @@ export class AuthService implements IAuthService {
   }
 
   login(email: string, password: string): Promise<ITokenPair> {
+    console.log(email, password);
     return new Promise((resolve, reject) =>
       this.store.findByUserName(email).then(result => {
+        console.log("RESULUUU", result)
         if (!result) {
           reject('User not found');
         } else {
@@ -41,6 +43,7 @@ export class AuthService implements IAuthService {
       this.store
         .findByUserName(email)
         .then(result => {
+          console.log(result)
           if (result) {
             reject('User already exists');
           } else {
@@ -84,7 +87,6 @@ export class AuthService implements IAuthService {
   }
 
   refreshToken(token: string): Promise<ITokenPair> {
-    console.log(token)
     return new Promise((resolve, reject) => {
       jwt.verify(
         token,
@@ -107,6 +109,53 @@ export class AuthService implements IAuthService {
       );
     });
   }
+
+  getProfile(id: string): Promise<IProfile> {
+    return new Promise<IProfile>(async(resolve, reject) => {
+      try {
+        const user = await this.store.findById(id);
+        if (user) {
+          resolve(<IProfile>{
+            id: "user", // for compartability with IOS App
+            name: user.name,
+            surname: user.surname,
+            image: user.image,
+            address: user.address,
+            done: user.done || false
+          })
+        } else {
+          reject('User not found')
+        }
+
+      }
+      catch (e) {
+        reject(e)
+      }
+    })
+  }
+
+  updateProfile(id: string, profile: IProfile): Promise<IProfile> {
+    return new Promise<IProfile>(async(resolve, reject) => {
+      try {
+        const result = await this.store.updateProfile(id, profile);
+        if (result) {
+          const profile = await this.getProfile(id);
+          resolve(profile);
+        }
+        else {
+          reject('Cant update profile')
+        }
+
+      }
+      catch (e) {
+        reject(e)
+      }
+    })
+  }
+
+
+
+
 
 
 }

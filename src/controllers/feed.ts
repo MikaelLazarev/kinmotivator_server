@@ -1,4 +1,5 @@
 import { IFeedItem, IFeedService } from '../core/feed';
+const uuidv4 = require('uuid/v4');
 
 export class FeedController {
 
@@ -10,16 +11,42 @@ export class FeedController {
 
     create()  {
         return (req: any, res: any) => {
-            const newItem = <IFeedItem>{
-                title : req.body.title,
-                subtitle : req.body.subtitle,
-                image : req.body.image,
-                author : req.body.author,
-                authorAccount : req.body.authorAccount,
+            console.log("Upload hanlder")
+            try {
+                if(!req.files) {
+                    res.status(400).send({
+                        error: 'No file uploaded'
+                    });
+                } else {
+                    //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+                    let photo = req.files.photo;
+
+                    console.log("BDYDYD", req.body)
+
+                    const name = uuidv4() + ".jpeg"
+                    //Use the mv() method to place the file in upload directory (i.e. "uploads")
+                    photo.mv('./uploads/' + name);
+
+                    //send response
+
+                    const newItem = <IFeedItem>{
+                                title : req.body.title,
+                                subtitle : req.body.subtitle,
+                                image : "http://localhost:3000/images/" + name,
+                                communityID: req.body.communityID,
+                                authorID : req.userID,
+                            }
+                            this.service.create(newItem)
+                                .then(result => res.json(result))
+                                .catch(() => res.status(400).send())
+
+                }
+            } catch (err) {
+                res.status(500).send(err);
             }
-            this.service.create(newItem)
-                .then(result => res.json(result))
-                .catch(() => res.status(400).send())
+
+        //
+        //
         }
     }
 

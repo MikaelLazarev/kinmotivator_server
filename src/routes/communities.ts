@@ -11,6 +11,8 @@ export function communitiesRouter(globalServices : GlobalServices): Router {
 	const communityController = new CommunityController(globalServices.communityService)
 	router
 		.get('/', communityController.list())
+		.get('/:id/join', communityController.join())
+		.get('/:id/leave', communityController.leave())
 		.get('/:id', communityController.retrieve())
 		.post('/', communityController.create())
 	return router;

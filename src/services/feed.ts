@@ -8,14 +8,14 @@ export class FeedService implements IFeedService {
     constructor(store: IFeedRepository) {
         this.store = store
 
-        this.create(<IFeedItem>{
-            title:"10K steps and marathon done",
-            subtitle: "Yeap!",
-            image: "https://dbslifestyle.s3.eu-central-1.amazonaws.com/sportBKG.jpg",
-            author: "Mike Lazarev",
-
-
-        }).then(() => console.log("Ok"))
+        // this.create(<IFeedItem>{
+        //     title:"10K steps and marathon done",
+        //     subtitle: "Yeap!",
+        //     image: "https://dbslifestyle.s3.eu-central-1.amazonaws.com/sportBKG.jpg",
+        //     author: "Mike Lazarev",
+        //
+        //
+        // }).then(() => console.log("Ok"))
     }
 
     create(ic: IFeedItem) : Promise<IFeedItem | null> {

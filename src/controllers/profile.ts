@@ -1,45 +1,43 @@
-import { ICommunityService } from "../core/communities";
+import { IAuthService, IProfile } from '../core/user';
 
 export class ProfileController {
+  public service: IAuthService;
 
-    public service : ICommunityService
+  constructor(service: IAuthService) {
+    this.service = service;
+  }
 
-    constructor(service : ICommunityService) {
-        this.service = service
-    }
+  getProfile() {
+    return async (req: any, res: any) => {
+      const userId = req.userID;
+      try {
+        const profile = await this.service.getProfile(userId);
+        console.log(profile)
+        res.status(200).json(profile);
+      } catch (err) {
+        res.status(400).json({ error: err.toString() });
+      }
+    };
+  }
 
-    create()  {
-        return (req: any, res: any) => {
-            this.service.create()
-                .then(result => res.json(result))
-                .catch(() => res.status(400).send())
-        }
-    }
+  updateProfile() {
+    return async (req: any, res: any) => {
+      const userId = req.userID;
 
-    list()  {
-        return (req: any, res: any) => {
-            this.service.listAll()
-                .then(result => res.json(result))
-                .catch(() => res.status(400).send())
-        }
-    }
+      const newProfile = <IProfile>{
+        name: req.body.name,
+        surname: req.body.surname,
+        address: req.body.address,
+        done: true
+      }
 
-    retrieve()  {
-        return (req: any, res: any) => {
-            const id = req.params.id || "0";
-            this.service.retrieve(id)
-                .then(result => res.json(result))
-                .catch(() => res.status(400).send())
-        }
-    }
-
-    join()  {
-        return (req: any, res: any) => {
-            console.log("KKK", this.service)
-            const id = "444"
-            const userId = "444"
-            return res.json(this.service.join(id, userId))
-        }
-    }
-
+      try {
+        const profile = await this.service.updateProfile(userId, newProfile);
+        console.log(profile)
+        res.status(200).json(profile);
+      } catch (err) {
+        res.status(400).json({ error: err.toString() });
+      }
+    };
+  }
 }

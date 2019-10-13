@@ -8,7 +8,7 @@ const pjson = require('pjson');
 export const MORGAN_LOG_LEVEL: MORGAN_LOG_OPTION = 'dev';
 export const VERSION: any = pjson.version;
 export const MEMO_CAP: number = 21;
-export const ANON_APP_ID: string = 'anon';
+export const ANON_APP_ID: string = 'jpNg';
 
 // To override the configurations, use the '.env' file in the root directory.
 export const config: ConfigParams = {

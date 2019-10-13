@@ -9,23 +9,33 @@ export class CommunityService implements ICommunityService {
     constructor(store: ICommunityRepository) {
         this.store = store
 
-        this.create(<ICommunity>{
-            title:"Run as your can",
-            subtitle: "Yeap!",
-            image: "https://dbslifestyle.s3.eu-central-1.amazonaws.com/sportBKG.jpg",
-        }).then(() => console.log("Ok"))
+        // this.create(<ICommunity>{
+        //     title:"Run as your can",
+        //     subtitle: "Yeap!",
+        //     image: "https://dbslifestyle.s3.eu-central-1.amazonaws.com/sportBKG.jpg",
+        // }).then(() => console.log("Ok"))
     }
 
     create(ic : ICommunity) : Promise<ICommunity | null> {
         return this.store.create(ic)
     }
 
-    join(id: string, userID: string): boolean {
-        return false;
+    join(id: string, userID: string): Promise<ICommunity | null> {
+        return new Promise<ICommunity|null>((resolve, reject) => {
+              this.store.join(id, userID)
+                .then(() => resolve(this.retrieve(id, userID)))
+                .catch(() => reject("Cant join community"))
+          }
+        )
     }
 
-    leave(id: string, userID: string): boolean {
-        return false;
+    leave(id: string, userID: string): Promise<ICommunity | null> {
+        return new Promise<ICommunity|null>((resolve, reject) => {
+              this.store.leave(id, userID)
+                .then(() => resolve(this.retrieve(id, userID)))
+                .catch(() => reject("Cant join community"))
+          }
+        )
     }
 
     listAll(): Promise<ICommunity[]> {
@@ -37,8 +47,32 @@ export class CommunityService implements ICommunityService {
     }
 
 
-    retrieve(id: string): Promise<ICommunity | null> {
-        return this.store.findById(id);
+    retrieve(id: string, userID: string): Promise<ICommunity | null> {
+        return new Promise<ICommunity|null>((resolve, reject) => {
+            this.store.findById(id)
+              .then(result => {
+                  if (!result) { reject("Nothing was found")}
+                  else {
+
+                      const members = result.members as Map<string, string>
+
+                      const clearedResult = <ICommunity>{
+                          id: result._id,
+                          title: result.title,
+                          subtitle: result.subtitle,
+                          image: result.image,
+                          description: result.description,
+                          is_member: result.members ? (members.get(userID) ? true : false) : false
+                      }
+
+                      console.log(clearedResult)
+                      resolve(clearedResult)
+                  }
+
+
+              })
+              .catch(e => reject(e))
+        })
     }
 
 }

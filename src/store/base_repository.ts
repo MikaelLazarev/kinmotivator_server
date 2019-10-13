@@ -42,7 +42,7 @@ export class RepositoryBase<T extends mongoose.Document>
     return this._model.find(cond, fields, options).exec();
   }
 
-  private toObjectId(_id: string): mongoose.Types.ObjectId {
+  protected toObjectId(_id: string): mongoose.Types.ObjectId {
     return mongoose.Types.ObjectId.createFromHexString(_id);
   }
 }

@@ -4,12 +4,12 @@ import {IBaseRepository} from "./repository";
 
 export interface IFeedItem extends Document {
      id : string
+     communityID: string
      title : string
      subtitle : string
      image : string
-     members_qty : number
      author : string
-     authorAccount : string
+     authorID : string
 }
 
 export interface IFeedRepository extends IBaseRepository<IFeedItem> {}
