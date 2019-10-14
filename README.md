@@ -1,1 +1,1 @@
-# kin-node-bootstrap
+# KinMotivator
