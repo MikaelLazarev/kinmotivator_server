@@ -1,4 +1,4 @@
-# KinMotivator
+# KinMotivator server
 
 KinMotivator helps people to achieve their goals. When you want to change your life, all you need is to install the app, find interesting communities and join them.
 
