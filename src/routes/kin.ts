@@ -34,7 +34,7 @@ export const routerHandler = (promise: any, params: any) => async (req: any, res
 	}
 };
 
-export function indexRouter(client: KinClient, account: KinAccount): Router {
+export function kinRouter(client: KinClient, account: KinAccount): Router {
 	const router = express.Router();
 	router
 		.get('/status', routerHandler(getStatus,(req: any, res: any, next: any) => [client, account]))
@@ -42,6 +42,9 @@ export function indexRouter(client: KinClient, account: KinAccount): Router {
 		.get('/balance/:address', balanceRequest, balanceValidator, routerHandler(getBalance, (req: GetBalance, res: any, next: any) => [client, req.params.address]))
 		.post('/create', createRequest, createValidator, routerHandler(create, (req: Create, res: any, next: any) => [client, account, (req as any).body]))
 		.post('/pay', payRequest, payValidator, routerHandler(pay, (req: Pay, res: any, next: any) => [client, account, (req as any).body]))
-		.post('/whitelist', WhitelistRequest, whitelistValidator, routerHandler(whitelist, (req: Whitelist, res: any, next: any) => [account, (req as any).body]))
+		.post('/whitelist',
+			// (req: any, res: any) => console.log(req.body),
+			// WhitelistRequest, whitelistValidator,
+			routerHandler(whitelist, (req: Whitelist, res: any, next: any) => [account, (req as any).body]))
 	return router;
 }

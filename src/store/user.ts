@@ -10,7 +10,7 @@ export const userSchema = new Schema({
   surname: { type: String },
   address: { type: String },
   image: { type: String, default: 'https://kinmotivator.s3.eu-north-1.amazonaws.com/user.png' },
-  done: { type: Boolean, default: true }
+  profile_done: { type: Boolean, default: false}
 }).set('toJSON', {
   virtuals: true,
   transform: (doc, ret, options) => {

@@ -6,7 +6,7 @@ export type WhitelistRes = {
 }
 
 export type Whitelist= Request &  {
-		envelope: string,
+		tx_envelope: string,
 		network_id: string
 	};
 

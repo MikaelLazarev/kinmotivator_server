@@ -1,9 +1,9 @@
-import { IAuthService, IProfile } from '../core/user';
+import { IUserService, IProfile } from '../core/user';
 
 export class ProfileController {
-  public service: IAuthService;
+  public service: IUserService;
 
-  constructor(service: IAuthService) {
+  constructor(service: IUserService) {
     this.service = service;
   }
 
@@ -15,6 +15,7 @@ export class ProfileController {
         console.log(profile)
         res.status(200).json(profile);
       } catch (err) {
+        console.log(err)
         res.status(400).json({ error: err.toString() });
       }
     };
@@ -28,7 +29,7 @@ export class ProfileController {
         name: req.body.name,
         surname: req.body.surname,
         address: req.body.address,
-        done: true
+        profile_done: true
       }
 
       try {
@@ -36,6 +37,7 @@ export class ProfileController {
         console.log(profile)
         res.status(200).json(profile);
       } catch (err) {
+        console.log(err)
         res.status(400).json({ error: err.toString() });
       }
     };

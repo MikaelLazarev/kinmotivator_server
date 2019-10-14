@@ -15,14 +15,16 @@ export interface IProfile extends Document {
   address: string;
   image: string;
   communities: ICommunity[];
-  done: boolean;
+  profile_done: boolean;
+  balance: number;
+  fee: number;
 }
 
 export interface IUser extends Document {
   id: string;
   username: string;
   password: string;
-  done: boolean;
+  profile_done: boolean;
   name: string;
   surname: string;
   address: string;
@@ -34,7 +36,7 @@ export interface IUserRepository extends IBaseRepository<IUser> {
   updateProfile(id: string, profile : IProfile) : Promise<boolean>;
 }
 
-export interface IAuthService {
+export interface IUserService {
   login(email: string, password: string): Promise<ITokenPair>;
   signup(email: string, password: string): Promise<ITokenPair>;
   refreshToken(token: string): Promise<ITokenPair>;

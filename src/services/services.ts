@@ -1,24 +1,27 @@
 import { CommunityService } from './communities';
 import { ICommunityService } from '../core/communities';
 import { GlobalStore } from '../store/store';
-import { IAuthService } from '../core/user';
-import { AuthService } from './user';
+import { IUserService } from '../core/user';
+import { UserService } from './user';
 import { IFeedService } from '../core/feed';
 import { FeedService } from './feed';
+import { KinAccount, KinClient } from '@kinecosystem/kin-sdk-node';
+import { KinService } from './kin';
 
 export class GlobalServices {
   private globalStore: GlobalStore;
-  public authService: IAuthService;
+  public userService: IUserService;
   public communityService: ICommunityService;
   public feedService : IFeedService;
+  public kinService : KinService;
 
-  constructor() {
+  constructor(client : KinClient, account : KinAccount) {
     this.globalStore = new GlobalStore();
     this.communityService = new CommunityService(
       this.globalStore.communityStore,
     );
-    this.authService = new AuthService(this.globalStore.userStore);
-    this.feedService = new FeedService(this.globalStore.feedStore);
-    console.log(this.communityService);
+    this.kinService = new KinService(client, account)
+    this.userService = new UserService(this.globalStore.userStore, this.kinService, this.communityService);
+    this.feedService = new FeedService(this.globalStore.feedStore, this.kinService, this.userService);
   }
 }

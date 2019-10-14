@@ -10,7 +10,7 @@ export function authRouter(
   globalServices: GlobalServices,
 ): Router {
   const router = express.Router();
-  const authController = new AuthController(globalServices.authService);
+  const authController = new AuthController(globalServices.userService);
   router
     .post('/login',  authController.login())
     .post('/signup',  authController.signup())

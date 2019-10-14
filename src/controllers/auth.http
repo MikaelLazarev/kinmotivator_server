@@ -13,3 +13,9 @@ password: "rere",
 }
 
 ###
+POST http://localhost:3000/api/kin/whitelist
+Content-Type: application/json
+
+{ "network_id":"Kin Testnet ; December 2018","envelope":"AAAAAA13bjf+QKSXsEMzaHFhtWGxiEoly6Us+ftZxnw2w1RTAAAAZAArLdMAAAABAAAAAAAAAAEAAAAHMS1qcE5nLQAAAAABAAAAAQAAAAANd243\/kCkl7BDM2hxYbVhsYhKJculLPn7WcZ8NsNUUwAAAAEAAAAARnxmy0t1EOaKddzYAHvetWiCPKXHlg9qYPJC\/dWESa0AAAAAAAAAAAABhqAAAAAAAAAAATbDVFMAAABA1Aqqe3eJObd5Mm+RWqvWHMXR3mo51sQnrUEuGSjco\/dgAdp1eMdBCOoA8\/5FKIaPAncT8r4dwj04BY70cVDiCg=="}
+
+###

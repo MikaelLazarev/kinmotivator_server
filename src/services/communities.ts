@@ -42,8 +42,8 @@ export class CommunityService implements ICommunityService {
         return this.store.find({}, {}, {})
     }
 
-    listPersonal(userID: string): ICommunity[] {
-        return [] as ICommunity[]
+    listPersonal(userID: string): Promise<ICommunity[]> {
+        return this.store.listPersonal(userID)
     }
 
 

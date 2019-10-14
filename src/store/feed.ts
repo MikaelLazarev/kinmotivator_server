@@ -1,13 +1,17 @@
 import { Schema, model } from 'mongoose';
-import { IFeedItem } from '../core/feed';
+import { IFeedItem, IFeedRepository } from '../core/feed';
 import { RepositoryBase } from './base_repository';
+import { IUser } from '../core/user';
 
 const feedSchema = new Schema({
   title: { type: String },
   subtitle: { type: String },
   image: { type: String },
   author: { type: String },
-  authorAccount: { type: String },
+  authorID: { type: String },
+  account: { type: String },
+  kin: { type: Number },
+  createdAt: { type: Date },
 });
 
 feedSchema.set('toJSON', {
@@ -19,8 +23,22 @@ feedSchema.set('toJSON', {
   },
 });
 
-export class FeedStore extends RepositoryBase<IFeedItem> {
+feedSchema.pre('save', function(this: IFeedItem, next) {
+  this.createdAt = new Date();
+  next();
+});
+
+export class FeedStore extends RepositoryBase<IFeedItem>
+  implements IFeedRepository {
   constructor() {
     super(model<IFeedItem>('Feed', feedSchema));
+  }
+
+  listAll(): Promise<IFeedItem[]> {
+    return this._model.find({}, {}, {}).sort({createdAt: -1}).exec()
+  }
+
+  incMoney(id: String, amount: number): Promise<boolean> {
+    return this._model.updateOne({ _id: id }, { $inc: { kin: amount } }).exec();
   }
 }

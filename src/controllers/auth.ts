@@ -1,9 +1,9 @@
-import { IAuthService } from '../core/user';
+import { IUserService } from '../core/user';
 
 export class AuthController {
-  public service: IAuthService;
+  public service: IUserService;
 
-  constructor(service: IAuthService) {
+  constructor(service: IUserService) {
     this.service = service;
   }
 

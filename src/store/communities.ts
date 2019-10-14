@@ -55,5 +55,11 @@ export class CommunityStore extends RepositoryBase<ICommunity> implements ICommu
     })
   }
 
+  listPersonal(userID: string): Promise<ICommunity[]> {
+    const item = "members." + userID
+    return this._model.find({[item]: {$exists: true }}).exec()
+  }
+
+
 
 }
