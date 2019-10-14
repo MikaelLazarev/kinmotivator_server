@@ -2,10 +2,11 @@ import { getKinAccount, getKinClient } from './init';
 import 'express-async-errors'; // handle async/await errors in middleware
 import { ConfigParams, MORGAN_LOG_LEVEL } from './config/environment';
 import { consoleConf } from './config/logger';
-import { generalErrorHandler, notFoundHandler } from './middlewares';
+import { generalErrorHandler, notFoundHandler } from './middlewares/_old';
 import * as core from 'express-serve-static-core';
 import { apiRouter } from './routes/api';
-import express from 'express';
+
+const express = require('express');
 
 const fileUpload = require('express-fileupload');
 const morgan = require('morgan');
@@ -13,7 +14,6 @@ const express_logger = require('express-logger-unique-req-id');
 const mongoose = require('mongoose');
 
 const compression = require('compression');
-const indexRouter = require('./routes/kin').kinRouter;
 export let logger: any;
 
 export async function createApp(config: ConfigParams): Promise<core.Express> {
@@ -51,9 +51,7 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
   logger = express_logger.getLogger();
   app.use(morgan(MORGAN_LOG_LEVEL, { stream: logger.stream }));
   app.use('/api', apiRouter(client, account));
-  // app.use('/kin', indexRouter(client, account));
   app.use(notFoundHandler); // catch 404
   app.use(generalErrorHandler); // catch errors
-  // });
   return app;
 }

@@ -1,4 +1,5 @@
 import { IFeedItem, IFeedService } from '../core/feed';
+import { ILike } from '../core/likes';
 const uuidv4 = require('uuid/v4');
 
 export class FeedController {
@@ -72,17 +73,5 @@ export class FeedController {
     };
   }
 
-  pay() {
-    return async (req: any, res: any) => {
-      const userId = req.userID;
-      const id = req.params.id || '0';
-      const amount = req.body.amount || 0;
-      try {
-        const feedUpdated = await this.service.pay(id, userId, amount);
-        res.json(feedUpdated);
-      } catch (err) {
-        res.status(400).json({ error: err });
-      }
-    };
-  }
+
 }

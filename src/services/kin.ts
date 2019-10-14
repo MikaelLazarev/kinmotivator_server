@@ -1,10 +1,9 @@
 import { KinAccount, KinClient } from '@kinecosystem/kin-sdk-node';
-import { createAccountService } from './create';
-import { add } from 'winston';
-import { Create } from '../controllers/create';
-import { getBalanceService } from './balance';
-import { payService } from './pay';
-import { Pay } from '../controllers/pay';
+import { createAccountService } from './kin/create';
+import { Create } from '../controllers/_old/create';
+import { getBalanceService } from './kin/balance';
+import { whitelistService } from './kin/whitelist';
+import { Whitelist } from '../controllers/_old/whitelist';
 
 export class KinService {
   account : KinAccount
@@ -26,11 +25,10 @@ export class KinService {
 
   }
 
-  pay(to: string, amount: number, memo: string) : Promise<string> {
-    return payService(this.client, this.account, <Pay>{
-      destination: to,
-      amount,
-      memo
+  pay(envelope: string, networkId: string) : Promise<string> {
+    return whitelistService(this.account, <Whitelist>{
+      envelope,
+      network_id: networkId
     })
   }
 

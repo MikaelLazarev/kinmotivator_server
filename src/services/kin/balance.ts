@@ -1,5 +1,5 @@
 import {KinClient} from "@kinecosystem/kin-sdk-node";
-import {AccountNotFoundError} from "../errors";
+import {AccountNotFoundError} from "../../errors";
 
 export async function getBalanceService(client: KinClient, address: string): Promise<number> {
 	try {

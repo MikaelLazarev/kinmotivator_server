@@ -26,5 +26,5 @@ export interface IFeedService {
   listPersonal(userID: string): IFeedItem[];
   join(id: string, userID: string): boolean;
   leave(id: string, userID: string): boolean;
-  pay(id: string, userID: string, amount: number) : Promise<IFeedItem[]>;
+  pay(id: string, amount: number): Promise<string>
 }

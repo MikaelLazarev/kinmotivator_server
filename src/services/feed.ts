@@ -56,28 +56,16 @@ export class FeedService implements IFeedService {
     return this.store.findById(id);
   }
 
-  pay(id: string, userID: string, amount: number): Promise<IFeedItem[]> {
-    return new Promise<IFeedItem[]>(async (resolve, reject) => {
+  pay(id: string, amount: number): Promise<string> {
+    return new Promise<string>(async (resolve, reject) => {
       try {
-        const feedItem = await this.store.findById(id);
-        if (feedItem) {
-          const user = await this.userService.getProfile(feedItem.id);
-          if (user) {
-            const result = await this.kinService.pay(
-              user.address,
-              amount,
-              feedItem.title,
-            );
-            if (result) {
+
               const result = await this.store.incMoney(id, amount);
               console.log(result)
-              resolve(this.listAll());
-            }
-          }
-        }
+              resolve("Ok");
+
       } catch (e) {}
     });
 
-    return this.listAll();
   }
 }

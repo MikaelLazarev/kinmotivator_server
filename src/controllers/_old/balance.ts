@@ -1,4 +1,4 @@
-import {getBalanceService} from '../services/balance';
+import {getBalanceService} from '../../services/kin/balance';
 import {KinClient} from "@kinecosystem/kin-sdk-node";
 
 export type BalanceRes = {

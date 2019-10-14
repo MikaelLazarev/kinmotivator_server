@@ -1,6 +1,6 @@
 import {KinClient} from "@kinecosystem/kin-sdk-node";
-import {paymentService} from "../services/payment";
-import {InvalidTransactionError} from "../errors";
+import {paymentService} from "../../services/kin/payment";
+import {InvalidTransactionError} from "../../errors";
 
 export type PaymentRes = {
 	source: string,

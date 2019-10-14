@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { IFeedItem, IFeedRepository } from '../core/feed';
 import { RepositoryBase } from './base_repository';
-import { IUser } from '../core/user';
 
 const feedSchema = new Schema({
   title: { type: String },

@@ -1,8 +1,9 @@
-import {InvalidParamError, MissingParamError} from "../errors";
+import {InvalidParamError, MissingParamError} from "../../errors";
+import {StrKey} from "@kinecosystem/kin-sdk";
 
 const {check, validationResult} = require('express-validator');
 
-export function paymentValidator(req: any, res: any, next: any) {
+export function balanceValidator(req: any, res: any, next: any) {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		const error = errors.errors[0];
@@ -16,5 +17,12 @@ export function paymentValidator(req: any, res: any, next: any) {
 	}
 	next();
 }
-
-export const PaymentRequest = [check('hash').exists().isLength({min: 64}).isHexadecimal()];
+// without decode check
+export const balanceRequest = [
+	check('address').custom((address: string) => {
+		if (!StrKey.isValidEd25519PublicKey(address)) {
+			throw new Error();
+		}
+		return true;
+	}).exists()
+];

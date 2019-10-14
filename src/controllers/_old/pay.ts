@@ -1,5 +1,5 @@
 import {KinAccount, KinClient} from "@kinecosystem/kin-sdk-node";
-import {payService} from "../services/pay";
+import {payService} from "../../services/kin/pay";
 
 export type PayRes = {
 	tx_id: string

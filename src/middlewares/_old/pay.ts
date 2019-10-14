@@ -1,5 +1,5 @@
-import {InvalidParamError, MissingParamError} from "../errors";
-import {MEMO_CAP} from "../config/environment";
+import {InvalidParamError, MissingParamError} from "../../errors";
+import {MEMO_CAP} from "../../config/environment";
 import {StrKey} from "@kinecosystem/kin-sdk";
 
 const {check, validationResult} = require('express-validator');

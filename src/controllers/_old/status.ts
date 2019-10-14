@@ -1,6 +1,6 @@
-import {getStatusService as getStatusService} from '../services/status';
+import {getStatusService as getStatusService} from '../../services/kin/status';
 import {KinAccount, KinClient} from '@kinecosystem/kin-sdk-node';
-import {VERSION} from "../config/environment";
+import {VERSION} from "../../config/environment";
 
 export type StatusRes = {
 	service_version: string,

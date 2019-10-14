@@ -1,5 +1,5 @@
-import {InvalidParamError, MissingParamError} from "../errors";
-import {MEMO_CAP} from "../config/environment";
+import {InvalidParamError, MissingParamError} from "../../errors";
+import {MEMO_CAP} from "../../config/environment";
 
 const {check, validationResult} = require('express-validator');
 

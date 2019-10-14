@@ -12,6 +12,5 @@ export function feedRouter(globalServices : GlobalServices): Router {
 		.get('/', feedController.list())
 		.get('/:id', feedController.retrieve())
 		.post('/', feedController.create())
-		.post('/:id/pay', feedController.pay())
 	return router;
 }

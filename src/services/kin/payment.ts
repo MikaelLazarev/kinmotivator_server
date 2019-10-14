@@ -1,5 +1,5 @@
 import {PaymentTransaction, KinClient, ResourceNotFoundError} from "@kinecosystem/kin-sdk-node";
-import {TransactionNotFoundError} from "../errors";
+import {TransactionNotFoundError} from "../../errors";
 
 export async function paymentService(client: KinClient, hash: string): Promise<any> {
 	try {

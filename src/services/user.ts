@@ -161,7 +161,7 @@ export class UserService implements IUserService {
       try {
         const address = profile.address;
         const transation_id = await this.kinService.createAccount(address);
-        console.log(transation_id);
+        console.log("TRANSACTION:", transation_id);
         const result = await this.store.updateProfile(id, profile);
         if (result) {
           const profile = await this.getProfile(id);

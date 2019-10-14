@@ -1,12 +1,12 @@
 import {KinAccount, NetworkError} from "@kinecosystem/kin-sdk-node";
-import {Whitelist} from "../controllers/whitelist";
-import {CantDecodeTransactionError, InvalidParamError} from "../errors";
+import {Whitelist} from "../../controllers/_old/whitelist";
+import {CantDecodeTransactionError, InvalidParamError} from "../../errors";
 
 export async function whitelistService(whitelistedAccount: KinAccount, params: Whitelist): Promise<string> {
 	try {
 		console.log("WHITELISSST!")
 		return await whitelistedAccount.whitelistTransaction({
-			envelope: params.tx_envelope,
+			envelope: params.envelope,
 			networkId: params.network_id
 		});
 	} catch (e) {

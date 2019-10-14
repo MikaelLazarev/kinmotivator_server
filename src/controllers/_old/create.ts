@@ -1,5 +1,5 @@
 import {KinAccount, KinClient} from "@kinecosystem/kin-sdk-node";
-import {createAccountService} from "../services/create";
+import {createAccountService} from "../../services/kin/create";
 
 export type CreateRes = {
 	tx_id: string

@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { IProfile, IUser, IUserRepository } from '../core/user';
 import { RepositoryBase } from './base_repository';
-import { profileSchema } from './profile';
 
 export const userSchema = new Schema({
   username: { type: String },

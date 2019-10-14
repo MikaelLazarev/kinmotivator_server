@@ -1,8 +1,8 @@
 import * as express from "express";
 import {Request, Response} from "express-serve-static-core";
 
-import {logger} from "../app";
-import {KinBootstrapError} from "../errors";
+import {logger} from "../../app";
+import {KinBootstrapError} from "../../errors";
 
 export const notFoundHandler = function (req: Request, res: Response) {
 	res.status(404).send({code: 404, error: "Not found", message: "Not found"});

@@ -4,8 +4,8 @@ import {
 	LowBalanceError as KinLowBalanceError,
 	AccountExistsError as KinAccountExistsError
 } from "@kinecosystem/kin-sdk-node";
-import {Create} from "../controllers/create";
-import {DestinationExistsError, LowBalanceError} from "../errors";
+import {Create} from "../../controllers/_old/create";
+import {DestinationExistsError, LowBalanceError} from "../../errors";
 
 export async function createAccountService(client: KinClient, account: KinAccount, params: Create): Promise<string> {
 	try {

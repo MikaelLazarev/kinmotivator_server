@@ -1,6 +1,6 @@
 import {KinAccount, KinClient, LowBalanceError as KinLowBalanceError} from "@kinecosystem/kin-sdk-node";
-import {Pay} from "../controllers/pay";
-import {DestinationDoesNotExistError, LowBalanceError} from "../errors";
+import {Pay} from "../../controllers/_old/pay";
+import {DestinationDoesNotExistError, LowBalanceError} from "../../errors";
 
 export async function payService(client: KinClient, account: KinAccount, params: Pay): Promise<string> {
 	const fee = await client.getMinimumFee();

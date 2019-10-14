@@ -1,12 +1,12 @@
 import {KinAccount, KinClient} from "@kinecosystem/kin-sdk-node";
-import {whitelistService} from "../services/whitelist";
+import {whitelistService} from "../../services/kin/whitelist";
 
 export type WhitelistRes = {
 	tx_envelope: string
 }
 
 export type Whitelist= Request &  {
-		tx_envelope: string,
+		envelope: string,
 		network_id: string
 	};
 
