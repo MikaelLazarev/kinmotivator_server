@@ -33,6 +33,7 @@ export class ProfileController {
       }
 
       try {
+        if (!userId) throw new Error("No user id was provided")
         const profile = await this.service.updateProfile(userId, newProfile);
         console.log(profile)
         res.status(200).json(profile);
