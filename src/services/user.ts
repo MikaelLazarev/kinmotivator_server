@@ -160,11 +160,17 @@ export class UserService implements IUserService {
     return new Promise<IProfile>(async (resolve, reject) => {
       try {
         const address = profile.address;
+        console.log("H!", id)
         const transation_id = await this.kinService.createAccount(address);
+        console.log("H2!", id)
         console.log("TRANSACTION:", transation_id);
+        console.log("H3!", id)
         const result = await this.store.updateProfile(id, profile);
+        console.log("H4!", id)
         if (result) {
+          console.log("H5!", id)
           const profile = await this.getProfile(id);
+          console.log("H6!", id)
           resolve(profile);
         } else {
           reject('Cant update profile');
