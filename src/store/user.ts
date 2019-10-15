@@ -34,9 +34,7 @@ export class UserStore extends RepositoryBase<IUser>
     return new Promise<boolean>(async(resolve, reject) => {
       console.log(id, profile)
       try {
-        console.log("THIS:::", this)
         const result = await this._model.updateOne( {"_id": this.toObjectId(id)}, { $set: profile }, {upsert: true, useFindAndModify: true}).exec()
-        console.log("MONGO OOO", result)
         resolve(true)
       } catch (e) {
         reject(e)

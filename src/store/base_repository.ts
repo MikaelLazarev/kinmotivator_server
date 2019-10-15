@@ -1,5 +1,5 @@
 import { IBaseRepository } from '../core/repository';
-import mongoose from 'mongoose';
+import mongoose = require('mongoose');
 
 export class RepositoryBase<T extends mongoose.Document>
   implements IBaseRepository<T> {

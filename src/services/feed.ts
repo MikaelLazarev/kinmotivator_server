@@ -3,37 +3,45 @@ import { KinService } from './kin';
 import { UserStore } from '../store/user';
 import { UserService } from './user';
 import { IUserService } from '../core/user';
+import { AWSService } from './aws';
+const uuidv4 = require('uuid/v4');
 
 export class FeedService implements IFeedService {
   private store: IFeedRepository;
   private kinService: KinService;
   private userService: IUserService;
+  private awsService: AWSService;
 
   constructor(
     store: IFeedRepository,
     kinService: KinService,
     userService: IUserService,
+    awsService: AWSService,
   ) {
     this.store = store;
     this.kinService = kinService;
     this.userService = userService;
+    this.awsService = awsService;
   }
 
-  create(ic: IFeedItem): Promise<IFeedItem | null> {
-      return new Promise<IFeedItem|null>(
-        async(resolve, reject) => {
-            try {
-                const profile = await this.userService.getProfile(ic.authorID)
-                ic.account = profile.address
-                ic.author = profile.name + " " + profile.surname
-                const result = await this.store.create(ic)
-                resolve(result)
-            }catch (e) {
-                reject(e)
+  create(ic: IFeedItem, body: Body): Promise<IFeedItem | null> {
+    return new Promise<IFeedItem | null>(async (resolve, reject) => {
+      try {
+        const filename = uuidv4() + '.jpeg';
+        const location = await this.awsService.uploadFile(body, filename);
+        console.log(location);
 
-            }
-        }
-      )
+        const profile = await this.userService.getProfile(ic.authorID);
+        ic.account = profile.address;
+        ic.author = profile.name + ' ' + profile.surname;
+        ic.image = location;
+        const result = await this.store.create(ic);
+        resolve(result);
+      } catch (e) {
+        console.log(e);
+        reject(e);
+      }
+    });
   }
 
   join(id: string, userID: string): boolean {
@@ -59,13 +67,10 @@ export class FeedService implements IFeedService {
   pay(id: string, amount: number): Promise<string> {
     return new Promise<string>(async (resolve, reject) => {
       try {
-
-              const result = await this.store.incMoney(id, amount);
-              console.log(result)
-              resolve("Ok");
-
+        const result = await this.store.incMoney(id, amount);
+        console.log(result);
+        resolve('Ok');
       } catch (e) {}
     });
-
   }
 }

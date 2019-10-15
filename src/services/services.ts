@@ -9,6 +9,7 @@ import { KinAccount, KinClient } from '@kinecosystem/kin-sdk-node';
 import { KinService } from './kin';
 import { ILikeService } from '../core/likes';
 import { LikesService } from './likes';
+import { AWSService } from './aws';
 
 export class GlobalServices {
   private globalStore: GlobalStore;
@@ -17,9 +18,12 @@ export class GlobalServices {
   public feedService: IFeedService;
   public kinService: KinService;
   public likesService: ILikeService;
+  public awsService : AWSService;
 
   constructor(client: KinClient, account: KinAccount) {
     this.globalStore = new GlobalStore();
+    this.awsService = new AWSService("kinmotivator");
+
     this.communityService = new CommunityService(
       this.globalStore.communityStore,
     );
@@ -35,6 +39,7 @@ export class GlobalServices {
       this.globalStore.feedStore,
       this.kinService,
       this.userService,
+      this.awsService,
     );
 
     this.likesService = new LikesService(this.globalStore.likesStore, this.userService, this.feedService);

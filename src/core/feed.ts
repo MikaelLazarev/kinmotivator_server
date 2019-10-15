@@ -20,7 +20,7 @@ export interface IFeedRepository extends IBaseRepository<IFeedItem> {
 }
 
 export interface IFeedService {
-  create(ic: IFeedItem): Promise<IFeedItem | null>;
+  create(ic: IFeedItem,  body: Body): Promise<IFeedItem | null>;
   retrieve(id: string): Promise<IFeedItem | null>;
   listAll(): Promise<IFeedItem[]>;
   listPersonal(userID: string): IFeedItem[];
