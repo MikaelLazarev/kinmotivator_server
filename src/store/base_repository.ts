@@ -1,5 +1,5 @@
-import * as mongoose from 'mongoose';
 import { IBaseRepository } from '../core/repository';
+import mongoose from 'mongoose';
 
 export class RepositoryBase<T extends mongoose.Document>
   implements IBaseRepository<T> {
@@ -43,6 +43,6 @@ export class RepositoryBase<T extends mongoose.Document>
   }
 
   protected toObjectId(_id: string): mongoose.Types.ObjectId {
-    return mongoose.Types.ObjectId.createFromHexString(_id);
+    return  mongoose.Types.ObjectId.createFromHexString(_id);
   }
 }
