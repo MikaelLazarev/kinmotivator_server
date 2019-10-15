@@ -32,7 +32,7 @@ export class FeedController {
           const newItem = <IFeedItem>{
             title: req.body.title,
             subtitle: req.body.subtitle,
-            image: 'http://localhost:3000/images/' + name,
+            image: 'https://kinmotivator.herokuapp.com/images/' + name,
             communityID: req.body.communityID,
             authorID: req.userID,
             kin: 0,
