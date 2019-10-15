@@ -7,6 +7,7 @@ export class AWSService {
 
   constructor(bucket: string) {
     const config = getAWSconfig()
+    console.log(config)
 
     this.s3 = config ? new S3(config) : new S3();
     this.bucket = bucket;
