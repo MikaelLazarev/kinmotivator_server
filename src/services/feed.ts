@@ -1,10 +1,8 @@
 import { IFeedItem, IFeedRepository, IFeedService } from '../core/feed';
 import { KinService } from './kin';
-import { UserStore } from '../store/user';
-import { UserService } from './user';
 import { IUserService } from '../core/user';
 import { AWSService } from './aws';
-const uuidv4 = require('uuid/v4');
+import uuidv4 = require('uuid/v4');
 
 export class FeedService implements IFeedService {
   private store: IFeedRepository;
@@ -28,6 +26,7 @@ export class FeedService implements IFeedService {
     return new Promise<IFeedItem | null>(async (resolve, reject) => {
       try {
         const filename = uuidv4() + '.jpeg';
+        console.log("Try to upload with", filename)
         const location = await this.awsService.uploadFile(body, filename);
         console.log(location);
 
