@@ -30,7 +30,7 @@ export class FeedService implements IFeedService {
       try {
         const filename = uuidv4() + '.jpeg';
         console.log("Try to upload with", filename)
-        const updatedPhoto = await sharp('input.jpg')
+        const updatedPhoto = await sharp(body)
           .rotate()
           .resize(1024, 682)
           .toBuffer()
