@@ -44,8 +44,8 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
     }),
   );
 
-  console.log(path.join(__dirname, '/static'))
-  app.use('/', express.static('/app/src/static'));
+  const pathToStatic = (process.env.TARGET === 'HEROKU') ? '/app/src/static' : __dirname + '/static';
+  app.use('/', express.static(pathToStatic));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(compression());
