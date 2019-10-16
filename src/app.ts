@@ -46,6 +46,7 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
 
   console.log(path.join(__dirname, '/static'))
   app.use('/', express.static('/static'));
+  app.use('/src', express.static('/src/static'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(compression());
