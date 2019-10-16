@@ -2,8 +2,10 @@ import { IFeedItem, IFeedRepository, IFeedService } from '../core/feed';
 import { KinService } from './kin';
 import { IUserService } from '../core/user';
 import { AWSService } from './aws';
-import sharp = require('sharp');
+
 import uuidv4 = require('uuid/v4');
+
+const sharp = require('sharp');
 
 export class FeedService implements IFeedService {
   private store: IFeedRepository;
