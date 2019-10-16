@@ -18,18 +18,6 @@ export class FeedController {
             error: 'No file uploaded',
           });
         } else {
-          //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-          let photo = req.files.photo;
-          // photo.body
-          //
-          // console.log('BDYDYD', req.body);
-          //
-          // const name = uuidv4() + '.jpeg';
-          // //Use the mv() method to place the file in upload directory (i.e. "uploads")
-          // photo.mv('./uploads/' + name);
-
-          //send response
-          console.log(req.files.photo)
 
           const newItem = <IFeedItem>{
             title: req.body.title,

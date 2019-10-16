@@ -19,6 +19,7 @@ export function getAWSconfig(): S3.Types.ClientConfiguration | null {
     return <S3.Types.ClientConfiguration>{
       accessKeyId: process.env.AWS_ID,
       secretAccessKey: process.env.AWS_SECRET,
+      // region: 'eu-north-1',
     };
   }
 }

@@ -2,6 +2,7 @@ import { IFeedItem, IFeedRepository, IFeedService } from '../core/feed';
 import { KinService } from './kin';
 import { IUserService } from '../core/user';
 import { AWSService } from './aws';
+import sharp = require('sharp');
 import uuidv4 = require('uuid/v4');
 
 export class FeedService implements IFeedService {
@@ -27,7 +28,11 @@ export class FeedService implements IFeedService {
       try {
         const filename = uuidv4() + '.jpeg';
         console.log("Try to upload with", filename)
-        const location = await this.awsService.uploadFile(body, filename);
+        const updatedPhoto = await sharp('input.jpg')
+          .rotate()
+          .resize(1024, 682)
+          .toBuffer()
+        const location = await this.awsService.uploadFile(updatedPhoto, filename);
         console.log(location);
 
         const profile = await this.userService.getProfile(ic.authorID);
