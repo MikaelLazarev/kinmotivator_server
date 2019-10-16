@@ -5,6 +5,7 @@ import { consoleConf } from './config/logger';
 import { generalErrorHandler, notFoundHandler } from './middlewares/_old';
 import * as core from 'express-serve-static-core';
 import { apiRouter } from './routes/api';
+import * as path from 'path';
 
 const express = require('express');
 
@@ -43,7 +44,7 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
     }),
   );
 
-  app.use('/images', express.static('uploads'))
+  app.use('/', express.static(path.join(__dirname, '/static')));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(compression());
