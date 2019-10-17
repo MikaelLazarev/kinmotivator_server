@@ -25,7 +25,7 @@ export const config: ConfigParams = {
 	PORT: parseInt(process.env.PORT ? process.env.PORT : '3000'),
 	CONSOLE_LOGGER: process.env.CONSOLE_LEVEL || 'SILLY',
 	DB: process.env.DB_PATH || 'mongodb+srv://root:wrikeTest2019@cluster0-j70uo.mongodb.net/dev_motivator?retryWrites=true&w=majority',
-	TOKEN_LIFE: 900,
+	TOKEN_LIFE: 86400,
 	REFRESH_TOKEN_LIFE: 86400,
 };
 

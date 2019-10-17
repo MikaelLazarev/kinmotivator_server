@@ -22,19 +22,41 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
   const account = await getKinAccount(client, config);
 
   try {
+    var db = mongoose.connection;
+
+    db.on('connecting', function() {
+      console.log('connecting to MongoDB...');
+    });
+
+    db.on('error', function(error: any) {
+      console.error('Error in MongoDb connection: ' + error);
+      mongoose.disconnect();
+    });
+    db.on('connected', function() {
+      console.log('MongoDB connected!');
+    });
+    db.once('open', function() {
+      console.log('MongoDB connection opened!');
+    });
+    db.on('reconnected', function () {
+      console.log('MongoDB reconnected!');
+    });
+    db.on('disconnected', function() {
+      console.log('MongoDB disconnected!');
+      mongoose.connect(config.DB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        autoReconnect:true,
+      });
+    });
     await mongoose.connect(config.DB, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      autoReconnect:true,
     });
   } catch (e) {
     console.log('Error to connect to MongoDB', e);
   }
-
-  // const db = mongoose.connection;
-  // db.on('error', console.error.bind(console, 'connection error:'));
-  // db.once('open', function() {
-  console.log('Connected to DB');
-  // we're connected!
 
   // enable files upload
   app.use(
