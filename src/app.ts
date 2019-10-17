@@ -5,6 +5,7 @@ import { consoleConf } from './config/logger';
 import { generalErrorHandler, notFoundHandler } from './middlewares/_old';
 import * as core from 'express-serve-static-core';
 import { apiRouter } from './routes/api';
+import * as path from 'path';
 
 const express = require('express');
 
@@ -29,7 +30,7 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
     });
 
     db.on('error', function(error: any) {
-      console.error('Error in MongoDb connection: ' + error);
+      console.error('12Error in MongoDb connection: ' + error);
       mongoose.disconnect();
     });
     db.on('connected', function() {
@@ -65,7 +66,8 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
     }),
   );
 
-  app.use('/images', express.static('uploads'))
+  const pathToStatic = (process.env.TARGET === 'HEROKU') ? '/app/src/landing' : __dirname + '/landing';
+  app.use('/', express.static(pathToStatic));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(compression());
