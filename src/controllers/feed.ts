@@ -1,6 +1,6 @@
 import { IFeedItem, IFeedService } from '../core/feed';
 import { ILike } from '../core/likes';
-const uuidv4 = require('uuid/v4');
+
 
 export class FeedController {
   public service: IFeedService;
@@ -18,27 +18,17 @@ export class FeedController {
             error: 'No file uploaded',
           });
         } else {
-          //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-          let photo = req.files.photo;
-
-          console.log('BDYDYD', req.body);
-
-          const name = uuidv4() + '.jpeg';
-          //Use the mv() method to place the file in upload directory (i.e. "uploads")
-          photo.mv('./uploads/' + name);
-
-          //send response
 
           const newItem = <IFeedItem>{
             title: req.body.title,
             subtitle: req.body.subtitle,
-            image: 'http://localhost:3000/images/' + name,
+            // image: 'https://kinmotivator.herokuapp.com/images/' + name,
             communityID: req.body.communityID,
             authorID: req.userID,
             kin: 0,
           };
           this.service
-            .create(newItem)
+            .create(newItem, req.files.photo.data)
             .then(result => res.json(result))
             .catch(() => res.status(400).send());
         }
@@ -56,7 +46,6 @@ export class FeedController {
       this.service
         .listAll()
         .then(result => {
-          console.log(result);
           res.json(result);
         })
         .catch(() => res.status(400).send());

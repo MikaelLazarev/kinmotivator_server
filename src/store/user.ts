@@ -35,7 +35,6 @@ export class UserStore extends RepositoryBase<IUser>
       console.log(id, profile)
       try {
         const result = await this._model.updateOne( {"_id": this.toObjectId(id)}, { $set: profile }, {upsert: true, useFindAndModify: true}).exec()
-        console.log("MONGO OOO", result)
         resolve(true)
       } catch (e) {
         reject(e)

@@ -23,7 +23,12 @@ export const authRequired = (req: any, res: any, next: any) => {
       } else {
         req.decoded = decoded;
         req.userID = (decoded as decodedToken).id;
-        next();
+        if (req.userID) next();
+        else {
+          return res.status(403).json({
+            error: 'Auth token is not supplied',
+          });
+        }
       }
     });
   } else {
