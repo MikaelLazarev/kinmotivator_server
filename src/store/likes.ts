@@ -29,6 +29,6 @@ export class LikesStore extends RepositoryBase<ILike> implements ILikeStore {
 
 
   listPersonal(userID: string): Promise<ILike[]> {
-    return this._model.find({ userID }).exec()
+    return this._model.find({ receiver: userID }).exec()
   }
 }

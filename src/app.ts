@@ -19,6 +19,9 @@ export let logger: any;
 
 export async function createApp(config: ConfigParams): Promise<core.Express> {
   const app = express();
+  const Sentry = require('@sentry/node');
+  Sentry.init({ dsn: 'https://00cd46908aed4167aa4ab9b51426e82b@sentry.io/1792215' });
+  app.use(Sentry.Handlers.requestHandler());
   const client = getKinClient(config);
   const account = await getKinAccount(client, config);
 
@@ -29,9 +32,9 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
       console.log('connecting to MongoDB...');
     });
 
-    db.on('error', function(error: any) {
+    db.on('error', async function(error: any) {
       console.error('12Error in MongoDb connection: ' + error);
-      mongoose.disconnect();
+      await mongoose.disconnect();
     });
     db.on('connected', function() {
       console.log('MongoDB connected!');
@@ -42,9 +45,9 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
     db.on('reconnected', function () {
       console.log('MongoDB reconnected!');
     });
-    db.on('disconnected', function() {
+    db.on('disconnected', async function() {
       console.log('MongoDB disconnected!');
-      mongoose.connect(config.DB, {
+      await mongoose.connect(config.DB, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         autoReconnect:true,
@@ -75,6 +78,7 @@ export async function createApp(config: ConfigParams): Promise<core.Express> {
   logger = express_logger.getLogger();
   app.use(morgan(MORGAN_LOG_LEVEL, { stream: logger.stream }));
   app.use('/api', apiRouter(client, account));
+  app.use(Sentry.Handlers.errorHandler());
   app.use(notFoundHandler); // catch 404
   app.use(generalErrorHandler); // catch errors
   return app;
